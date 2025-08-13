@@ -1,0 +1,35 @@
+import math
+import time
+
+async def progress_bar(current, total, task_type, file_count, user_name, message):
+    # Calculate percentage
+    percent = (current / total) * 100
+    percent_str = f"{percent:.1f}%"
+
+    # Create a 10-block bar
+    filled_blocks = math.floor(percent / 10)
+    empty_blocks = 10 - filled_blocks
+    bar = "▓" * filled_blocks + "░" * empty_blocks
+
+    # Format bold text in Unicode
+    text = (
+        f"𝐓𝐚𝐬𝐤 𝐒𝐭𝐚𝐫𝐭𝐞𝐝\n\n"
+        f"𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠 :- {bar} {percent_str}\n"
+        f"𝐅𝐢𝐧𝐢𝐬𝐡𝐞𝐝 :- {percent_str}\n"
+        f"𝐅𝐢𝐥𝐞𝐬 :- {file_count}\n"
+        f"𝐁𝐲 :- {user_name}"
+    )
+
+    # Edit the Telegram message with updated progress
+    try:
+        await message.edit_text(text)
+    except Exception:
+        pass
+
+# Example usage inside a download function:
+async def fake_download(message, user_name):
+    total_size = 100
+    file_count = 3
+    for current_size in range(0, total_size + 1, 5):
+        await progress_bar(current_size, total_size, "Downloading", file_count, user_name, message)
+        time.sleep(0.5)  # simulate download delay
