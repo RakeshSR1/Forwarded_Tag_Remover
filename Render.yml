@@ -1,0 +1,16 @@
+services:
+  - type: worker
+    name: featured-bot
+    env: python
+    plan: starter
+    autoDeploy: true
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: API_ID
+      - key: API_HASH
+      - key: BOT_TOKEN
+      - key: SOURCE_CHANNEL
+      - key: DEST_CHANNEL
+      - key: OWNER_ID
+      - key: MAX_UNZIP_FILES
